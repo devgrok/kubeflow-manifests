@@ -37,6 +37,13 @@ vars:
     apiVersion: v1
   fieldref:
     fieldpath: data.oidc_redirect_uri
+- name: oidc_scopes
+  objref:
+    kind: ConfigMap
+    name: oidc-authservice-parameters
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.oidc_scopes
 - name: oidc_auth_url
   objref:
     kind: ConfigMap
