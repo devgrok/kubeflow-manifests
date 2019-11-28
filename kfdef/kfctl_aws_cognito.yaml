@@ -37,6 +37,28 @@ spec:
   - kustomizeConfig:
       overlays:
       - application
+      parameters:
+      - name: namespace
+        value: istio-system
+      - name: userid-header
+        value: kubeflow-userid
+      - name: oidc_provider
+        value: https://cognito-idp.us-west-2.amazonaws.com/us-west-2_xxxxxxxxx
+      - name: oidc_redirect_uri
+        value: https://your.custom.domain/login/oidc
+      - name: oidc_scopes
+        value: profile email
+      - name: client_id
+        value: xxxxxbxxxxxx
+      - name: application_secret
+        value: yyyyyyyyyyyy
+      repoRef:
+        name: ambiata-manifests
+        path: manifests/oidc-authservice
+    name: oidc-authservice
+  - kustomizeConfig:
+      overlays:
+      - application
       repoRef:
         name: manifests
         path: application/application
@@ -63,6 +85,9 @@ spec:
       overlays:
       - istio
       - application
+      parameters:
+      - name: userid-header
+        value: kubeflow-userid
       repoRef:
         name: manifests
         path: common/centraldashboard
@@ -88,6 +113,9 @@ spec:
       overlays:
       - istio
       - application
+      parameters:
+      - name: userid-header
+        value: kubeflow-userid
       repoRef:
         name: manifests
         path: jupyter/jupyter-web-app
@@ -256,6 +284,9 @@ spec:
       overlays:
       - application
       - istio
+      parameters:
+      - name: userid-header
+        value: kubeflow-userid
       repoRef:
         name: manifests
         path: profiles
@@ -276,7 +307,7 @@ spec:
     name: mpi-operator
   - kustomizeConfig:
       overlays:
-      - cognito
+      - secure
       parameters:
       - name: namespace
         value: istio-system
@@ -309,9 +340,6 @@ spec:
       auth:
         cognito:
           certArn: arn:aws:acm:us-west-2:xxxxx:certificate/xxxxxxxxxxxxx-xxxx
-          cognitoAppClientId: xxxxxbxxxxxx
-          cognitoUserPoolArn: arn:aws:cognito-idp:us-west-2:xxxxx:userpool/us-west-2_xxxxxx
-          cognitoUserPoolDomain: your-user-pool
       region: us-west-2
       roles:
       - eksctl-kubeflow-aws-nodegroup-ng-a2-NodeInstanceRole-xxxxx
