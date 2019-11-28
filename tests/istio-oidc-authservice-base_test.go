@@ -65,7 +65,7 @@ spec:
           - name: OIDC_AUTH_URL
             value: $(oidc_auth_url)
           - name: OIDC_SCOPES
-            value: "profile email groups"
+            value: $(oidc_scopes)
           - name: REDIRECT_URL
             value: $(oidc_redirect_uri)
           - name: SKIP_AUTH_URI
@@ -148,6 +148,7 @@ varReference:
 client_id=ldapdexapp
 oidc_provider=
 oidc_redirect_uri=
+oidc_scopes=profile email groups
 oidc_auth_url=
 application_secret=pUBnBOY80SnXgjibTYM9ZWNzY2xreNGQok
 skip_auth_uri=
@@ -194,6 +195,13 @@ vars:
     apiVersion: v1
   fieldref:
     fieldpath: data.oidc_redirect_uri
+- name: oidc_scopes
+  objref:
+    kind: ConfigMap
+    name: oidc-authservice-parameters
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.oidc_scopes
 - name: oidc_auth_url
   objref:
     kind: ConfigMap
