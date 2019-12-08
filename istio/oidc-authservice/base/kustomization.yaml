@@ -3,9 +3,8 @@ kind: Kustomization
 
 resources:
 - service.yaml
-- deployment.yaml
+- statefulset.yaml
 - envoy-filter.yaml
-- pvc.yaml
 
 namespace: istio-system
 
